@@ -1,0 +1,40 @@
+name: My Automated Factory
+
+# 1. Trigger: When I push code to GitHub
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Step 1: Get the code
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # Step 2: The Health Inspector (Simulating SonarQube)
+    - name: Static Code Analysis (Check for typos)
+      run: |
+        echo "Running SonarQube style checks..."
+        if grep -q "Hello" index.html; then
+          echo "✅ Code looks good!"
+        else
+          echo "❌ Error: Missing text!"
+          exit 1
+        fi
+
+    # Step 3: The Build Stage (Simulating Maven)
+    - name: Build Stage
+      run: echo "Building the app... (Maven would go here)"
+
+    # Step 4: Pack it in a Lunchbox (Docker)
+    - name: Build Docker Image
+      run: |
+        docker build -t my-app:latest .
+        echo "Docker image created successfully!"
+        
+    # Step 5: Delivery prep (Simulating GitOps/Argo)
+    - name: Update Delivery Manifest
+      run: echo "Ready to push to Dockerhub and notify ArgoCD!"
