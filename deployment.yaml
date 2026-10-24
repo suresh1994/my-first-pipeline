@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-web-app
+spec:
+  replicas: 2 # Kubernetes will run 2 copies of your app for safety!
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: my-app-container
+        image: my-app:latest # This is the lunchbox we just built!
+        ports:
+        - containerPort: 80
